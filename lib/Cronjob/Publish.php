@@ -17,7 +17,7 @@ class Publish extends rex_cronjob
     public function execute()
     {
         /* Collection von Neues-Einträgen, die noch nicht veröffentlicht sind, aber es sein sollten. (geplant) */
-        $neues_entry_to_publish = Entry::query()->where('status', Entry::PLANNED)->where('publishdate', date('Y-m-d'), '<')->find();
+        $neues_entry_to_publish = Entry::query()->where('status', Entry::PLANNED)->where('publishdate', date('Y-m-d H:i:s'), '<')->find();
         $neues_entry_to_publish->setValue('status', Entry::ONLINE);
         if (!$neues_entry_to_publish->save()) {
             $this->setMessage(sprintf(rex_i18n::msg('neues_entry_publish_error'), count($neues_entry_to_publish)));
